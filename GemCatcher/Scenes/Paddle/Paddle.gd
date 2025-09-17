@@ -1,5 +1,6 @@
 extends Area2D
 
+const SPEED: float = 200
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -8,8 +9,14 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_pressed("move_left") and position.x - 3 > get_viewport_rect().position.x:
-		position.x -= 200*delta 
+	if Input.is_action_pressed("move_left"):
+		position.x -= SPEED*delta
 	else: if Input.is_action_pressed("move_right"):
-		position.x += 200*delta	
+		position.x += SPEED*delta
+	
+	position.x = clampf(
+		position.x,
+		get_viewport_rect().position.x,
+		get_viewport_rect().end.x
+	)	
 		
